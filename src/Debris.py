@@ -9,4 +9,4 @@ class Debris:
         self.vel3 = vel[2]
 
     def __repr__(self): 
-        return "Name:  % s \nPosition: % s \nVelocity: % s \n" % (self.name, self.position, self.velocity)
+        return "Name:  % s \nPosition: % s \nVelocity: % s \n" % (self.name, str(pos1) + str(pos2) + str(pos3), str(vel1) + str(vel2) + str(vel3))

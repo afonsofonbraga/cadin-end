@@ -16,7 +16,7 @@ def importData():
         con.close()
 
         debris_count = 0
-        print("Imported ", len(records), " tls objects from database.")
+        print("Imported", len(records), "tle objects from database.")
         for row in records:
             # row[0] -> name
             # row[1] -> s
@@ -28,7 +28,7 @@ def importData():
                 debris_count += 1
                 new_debri = Debris(row[0],r,v)
                 insert_debri(new_debri)
-        print("From ", len(records), "tls objects, ", debris_count," debris were added into the database.")
+        print("From", len(records), "tle objects,", debris_count,"debris were added into the database.")
     except:
-        print("Could not fetch data from tls database.")
+        print("Could not fetch data from tle database.")
 importData()

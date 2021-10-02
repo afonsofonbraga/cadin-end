@@ -1,4 +1,5 @@
 import sqlite3
+from debris import Debris
 
 def reset_table():
     con = sqlite3.connect('../data/database.db')
@@ -14,7 +15,7 @@ def reset_table():
 
     con.close()
 
-def inset_value(name, s, t):
+def inset_value(debri):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
@@ -23,7 +24,7 @@ def inset_value(name, s, t):
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
     try:
-        cur.execute(f"INSERT INTO debris VALUES ('{name}',{s},{t})")
+        cur.execute(f"INSERT INTO debris VALUES ('{debri.name}',{debri.s},{debri.t})")
         con.commit()
     except:
             print("ERROR INSERTING VALUE!!!!!!")

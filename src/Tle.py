@@ -1,5 +1,5 @@
 class Tle:
-    def init(self, name, s, t) -> None:
+    def __init__(self, name, s, t) -> None:
         self.name = name
         self.s = s
         self.t = t

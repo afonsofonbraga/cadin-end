@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import size
 import requests
 import json
 import configparser
@@ -63,8 +64,5 @@ for data in range(0, np.size(database)-1, 3):
     new_tle = Tle(name, s, t)
     if new_tle.name.find('DEB') != -1: debrislist.append(new_tle)
     insert_tle(new_tle)
-
-
-print(debrislist[0])
 
 print("Completed session")

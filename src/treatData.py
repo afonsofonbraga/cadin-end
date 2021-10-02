@@ -1,7 +1,4 @@
 import sqlite3
-import numpy as np
-from Debris import Debris
-
 
 def importData():
     con = sqlite3.connect('../data/database.db')
@@ -18,7 +15,6 @@ def importData():
         print("t: ", row[1])
         print("s: ", row[2])
         print("\n")
-    con.commit()
     con.close()
 
 importData()

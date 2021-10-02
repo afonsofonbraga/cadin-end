@@ -1,61 +1,111 @@
 import sqlite3
 from Debris import Debris
 from Tle import Tle
+import numpy as np
 
-def reset_debri():
+def create_tables():
     con = sqlite3.connect('../data/database.db')
     cur = con.cursor()
-    try:
-        cur.execute('''DROP TABLE debris''')
-    except:
-        print("Table not available.")
-
-    cur.execute('''CREATE TABLE debris (name text, pos1 real, pos2 real, pos3 real, vel1 real, vel2 real, vel3 real)''')
+    cur.execute('''CREATE TABLE if not EXISTS debris_name (name_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)''')
+    cur.execute('''CREATE TABLE if not EXISTS debris (debris_name_id INTEGER, pos1 REAL, pos2 REAL, pos3 REAL, vel1 REAL, vel2 REAL, vel3 REAL, FOREIGN KEY(debris_name_id) REFERENCES debris_name(name_id))''')
+    cur.execute('''CREATE TABLE if not EXISTS tle (debris_name_id INTEGER, s TEXT, t TEXT, FOREIGN KEY(debris_name_id) REFERENCES debris_name(name_id))''')
     con.commit()
     con.close()
 
-def reset_tle():
+def get_debris_id(debris_name):
     con = sqlite3.connect('../data/database.db')
     cur = con.cursor()
     try:
-        cur.execute('''DROP TABLE tle''')
+        sqlite_select_query = """SELECT * FROM debris_name WHERE name=?"""
+        cur.execute(sqlite_select_query,(debris_name,))
     except:
-        print("Table not available.")
+        con.close()
+        create_tables()
+        con = sqlite3.connect('../data/database.db')
+        cur = con.cursor()
+        sqlite_select_query = """SELECT * FROM debris_name WHERE name=?"""
+        cur.execute(sqlite_select_query,(debris_name,))
 
-    cur.execute('''CREATE TABLE tle (name text, s text, t text)''')
-    con.commit()
+    records = cur.fetchall()
+    if np.size(records) == 0:
+        cur.execute('''INSERT INTO debris_name (name) VALUES (?)''',(debris_name,))
+        con.commit()
+        sqlite_select_query = """SELECT * FROM debris_name WHERE name=?"""
+        cur.execute(sqlite_select_query,(debris_name,))
+        records = cur.fetchall()
     con.close()
+    return records[0][0]
 
 def insert_debri(debri):
+    debris_id = 0
+    try:
+        debris_id = get_debris_id(debri.name[0])
+    except:
+        create_tables()
+        debris_id = get_debris_id(debri.name[0])
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
-        cur.execute('''INSERT INTO debris VALUES ('{debri.name}',{debri.pos1},{debri.pos2},{debri.pos3},{debri.vel1},{debri.vel2},{debri.vel3})''')
+        cur.execute('''INSERT OR REPLACE INTO debris (debris_name_id, pos1, pos2, pos3, vel1, vel2, vel3) VALUES (?,?,?,?,?,?,?)''',(debris_id,debri.pos1},debri.pos2,debri.pos3,debri.vel1,debri.vel2,debri.vel3,))
         con.commit()
     except:
-        try:
-            reset_debri()
-            con = sqlite3.connect('../data/database.db')
-            cur = con.cursor()
-            cur.execute('''INSERT INTO debris VALUES ('{debri.name}',{debri.pos1},{debri.pos2},{debri.pos3},{debri.vel1},{debri.vel2},{debri.vel3})''')
-            con.commit()
-        except:
-                print("ERROR INSERTING VALUE!!!!!!")
+        # # reset_debri()
+        # # try:
+        # #     con = sqlite3.connect('../data/database.db')
+        # #     cur = con.cursor()
+        # #     debris_id = get_debris_id(debri.name)
+        # #     cur.execute('''INSERT OR REPLACE INTO debris VALUES ('{debri.name}',{debri.pos1},{debri.pos2},{debri.pos3},{debri.vel1},{debri.vel2},{debri.vel3})''')
+        # #     con.commit()
+        # except:
+        print("ERROR INSERTING DEBRIS VALUE!!!!!!")
     con.close()
 
 def insert_tle(tle):
+    tle_id = 0
+    try:
+        tle_id = get_debris_id(tle.name[0])
+    except:
+        create_tables()
+        tle_id = get_debris_id(tle.name[0])
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
-        cur.execute('''INSERT INTO tle VALUES ('{tle.name}','{tle.s}','{tle.t}')''')
+        cur.execute("""INSERT OR REPLACE INTO tle (debris_name_id,s,t) VALUES (?,?,?)""",(tle_id,tle.s,tle.t,))
         con.commit()
     except:
-        try:
-            reset_tle()
-            con = sqlite3.connect('../data/database.db')
-            cur = con.cursor()
-            cur.execute('''INSERT INTO tle VALUES ('{tle.name}','{tle.s}','{tle.t}')''')
-            con.commit()
-        except:
-            print("ERROR INSERTING VALUE!!!!!!")
+        # reset_tle()
+        # try:
+        #     tle_id = get_debris_id(tle.name)
+        #     con = sqlite3.connect('../data/database.db')
+        #     cur = con.cursor()
+        #     cur.execute('''INSERT OR REPLACE INTO tle VALUES ('{tle.name}','{tle.s}','{tle.t}')''')
+        #     con.commit()
+        # except:
+        print("ERROR INSERTING TLE VALUE!!!!!!")
     con.close()
+
+
+
+# def reset_debri():
+#     con = sqlite3.connect('../data/database.db')
+#     cur = con.cursor()
+#     try:
+#         cur.execute('''DROP TABLE debris''')
+#     except:
+#         print("Table not available.")
+
+#     cur.execute('''CREATE TABLE debris (FOREIGN KEY (name_id) REFERENCES debris_name, pos1 REAL, pos2 REAL, pos3 REAL, vel1 REAL, vel2 REAL, vel3 REAL)''')
+#     con.commit()
+#     con.close()
+
+# def reset_tle():
+#     con = sqlite3.connect('../data/database.db')
+#     cur = con.cursor()
+#     try:
+#         cur.execute('''DROP TABLE tle''')
+#     except:
+#         print("Table not available.")
+
+#     cur.execute('''CREATE TABLE tle (FOREIGN KEY (name_id) REFERENCES debris_name, s TEXT, t TEXT)''')
+#     con.commit()
+#     con.close()

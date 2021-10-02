@@ -1,10 +1,10 @@
-from sgp4.api import Satrec
+from sgp4.api import Satrec,jday
 import sqlite3
 from sgp4.functions import jday
 from query import reset_debri, insert_debri
 from Debris import Debris
 
-def importData():
+def importData(jd):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()

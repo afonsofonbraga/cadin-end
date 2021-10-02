@@ -5,6 +5,8 @@ import time
 from datetime import datetime
 import numpy as np
 from Debris import Debris
+from query import inset_value, reset_table
+
 
 class MyError(Exception):
     def __init___(self,args):
@@ -13,7 +15,7 @@ class MyError(Exception):
 
 uriBase                = "https://www.space-track.org"
 requestLogin           = "/ajaxauth/login"
-requestCmdAction       = "/basicspacedata/query" 
+requestCmdAction       = "/basicspacedata/query"
 requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-1/orderby/COMMENT asc/format/3le"
 
 # ACTION REQUIRED FOR YOU:
@@ -53,12 +55,14 @@ with requests.Session() as session:
 
 database = (resp.text.split("\r\n"))
 debrislist = []
+
 for data in range(0, np.size(database)-1, 3):
     name = database[data]
     s = database[data+1]
     t = database[data+2]
     new_debri = Debris(name, s, t)
     if new_debri.name.find('DEB') != -1: debrislist.append(new_debri)
+    inset_value(new_debri)
 
 
 print(debrislist[0])

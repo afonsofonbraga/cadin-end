@@ -1,10 +1,10 @@
 from sgp4.api import Satrec,jday
 import sqlite3
 from sgp4.functions import jday
-from query import reset_debri, insert_debri
+from query import insert_debri
 from Debris import Debris
 
-def importData(jd):
+def importData(time):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
@@ -22,7 +22,13 @@ def importData(jd):
             # row[1] -> s
             # row[2] -> t
             satellite = Satrec.twoline2rv(row[1], row[2])
-            jd, fr = 2458827, 0.362605  #??????????
+            year = int(time.split(',')[0])
+            month = int(time.split(',')[1])
+            day = int(time.split(',')[2])
+            hour = int(time.split(',')[3])
+            minute = int(time.split(',')[4])
+            second = int(time.split(',')[5])
+            jd, fr = jday(year, month, day, hour, minute, second)
             e, r, v = satellite.sgp4(jd, fr)
             if e == 0:
                 debris_count += 1

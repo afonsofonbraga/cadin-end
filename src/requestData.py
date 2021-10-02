@@ -4,6 +4,7 @@ import configparser
 import time
 from datetime import datetime
 import numpy as np
+import debris
 
 class MyError(Exception):
     def __init___(self,args):
@@ -49,5 +50,17 @@ with requests.Session() as session:
 
 
     session.close()
+
+database = (resp.text.split("\r\n"))
+debrislist = []
+for data in range(0, np.size(database)-1, 3):
+    new_debri = debris
+    new_debri.name = database[data]
+    new_debri.s = database[data+1]
+    new_debri.t = database[data+2]
+    debrislist.append(new_debri)
+
+print(debrislist[0])
+    
 
 print("Completed session") 

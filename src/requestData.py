@@ -31,6 +31,7 @@ requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-1/orderby/COMMENT asc
 # ... and ZZZ is your Excel Output file - e.g. starlink-track.xlsx (note: make it an .xlsx file)
 
 # Use configparser package to pull in the ini file (pip install configparser)
+print("Requesting data from space-track...")
 
 config = configparser.ConfigParser()
 config.read("../include/SLTrack.ini")
@@ -64,5 +65,7 @@ for data in range(0, np.size(database)-1, 3):
     new_tle = Tle(name, s, t)
     if new_tle.name.find('DEB') != -1: debrislist.append(new_tle)
     insert_tle(new_tle)
-
+print("Acquired" + str(size(database)) + " tls objects.")
+print("From " + str((size(database)-1)/3) + " tls objects, " +str(size(debrislist)) + " contained DEB prefix.")
+print("All tls data were added into the database.")
 print("Completed session")

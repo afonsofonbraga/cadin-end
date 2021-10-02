@@ -15,8 +15,8 @@ def importData():
         records = cur.fetchall()
         con.close()
 
-        print("Total rows are:  ", len(records))
-        print("Printing each row")
+        debris_count = 0
+        print("Imported ", len(records), " tls objects from database.")
         for row in records:
             # row[0] -> name
             # row[1] -> s
@@ -24,9 +24,11 @@ def importData():
             satellite = Satrec.twoline2rv(row[1], row[2])
             jd, fr = 2458827, 0.362605  #??????????
             e, r, v = satellite.sgp4(jd, fr)
-            if (e == 0):
+            if e == 0:
+                debris_count += 1
                 new_debri = Debris(row[0],r,v)
                 insert_debri(new_debri)
+        print("From ", len(records), "tls objects, ", debris_count," debris were added into the database.")
     except:
-        print("Could not fetch data.")
+        print("Could not fetch data from tls database.")
 importData()

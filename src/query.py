@@ -1,7 +1,7 @@
 import sqlite3
 
 def reset_table():
-    con = sqlite3.connect('/database.db')
+    con = sqlite3.connect('../data/database.db')
     cur = con.cursor()
     try:
         cur.execute('''DROP TABLE debris''')
@@ -16,11 +16,11 @@ def reset_table():
 
 def inset_value(name, s, t):
     try:
-        con = sqlite3.connect('/database.db')
+        con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
     except:
         reset_table()
-        con = sqlite3.connect('/database.db')
+        con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
     try:
         cur.execute(f"INSERT INTO debris VALUES ('{name}',{s},{t})")

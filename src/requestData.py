@@ -61,11 +61,9 @@ debrislist = []
 for data in range(0, np.size(database)-1, 3):
     name = re.findall('0 (.+) DEB',database[data])
     if size(name) == 1:
-        print(name, database[data])
         s = database[data+1]
         t = database[data+2]
         new_tle = Tle(name, s, t)
-    # if new_tle.name.find('DEB') != -1: 
         debrislist.append(new_tle)
         insert_tle(new_tle)
 print("Acquired", (size(database)-1)/3, "tle objects.")

@@ -4,8 +4,8 @@ import configparser
 import time
 from datetime import datetime
 import numpy as np
-from Debris import Debris
-from query import inset_value, reset_table
+from Tle import Tle
+from query import insert_tle
 
 
 class MyError(Exception):
@@ -60,9 +60,9 @@ for data in range(0, np.size(database)-1, 3):
     name = database[data]
     s = database[data+1]
     t = database[data+2]
-    new_debri = Debris(name, s, t)
-    if new_debri.name.find('DEB') != -1: debrislist.append(new_debri)
-    inset_value(new_debri)
+    new_tle = Tle(name, s, t)
+    if new_tle.name.find('DEB') != -1: debrislist.append(new_tle)
+    insert_tle(new_tle)
 
 
 print(debrislist[0])

@@ -27,7 +27,7 @@ def reset_tle():
 
     con.close()
 
-def inset_debri(debri):
+def insert_debri(debri):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
@@ -42,7 +42,7 @@ def inset_debri(debri):
             print("ERROR INSERTING VALUE!!!!!!")
     con.close()
 
-def inset_tle(tle):
+def insert_tle(tle):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()

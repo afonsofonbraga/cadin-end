@@ -1,0 +1,12 @@
+name: nasa
+dependencies:
+  - python
+  - pip
+  - scipy
+  - pip:
+    - matplotlib
+    - pandas
+    - configparser
+    - xlsxwriter
+    - requests
+    - sgp4

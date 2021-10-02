@@ -1,6 +1,4 @@
 import sqlite3
-from Debris import Debris
-from Tle import Tle
 import numpy as np
 
 def create_tables():
@@ -57,12 +55,7 @@ def get_debris_name(debris_id):
         return None
 
 def insert_debri(debri):
-    debris_id = 0
-    try:
-        debris_id = get_debris_id(debri.name[0])
-    except:
-        create_tables()
-        debris_id = get_debris_id(debri.name[0])
+    debris_id = debri.name
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
@@ -89,27 +82,13 @@ def insert_tle(tle):
     con.close()
 
 
-
-# def reset_debri():
-#     con = sqlite3.connect('../data/database.db')
-#     cur = con.cursor()
-#     try:
-#         cur.execute('''DROP TABLE debris''')
-#     except:
-#         print("Table not available.")
-
-#     cur.execute('''CREATE TABLE debris (FOREIGN KEY (name_id) REFERENCES debris_name, pos1 REAL, pos2 REAL, pos3 REAL, vel1 REAL, vel2 REAL, vel3 REAL)''')
-#     con.commit()
-#     con.close()
-
-# def reset_tle():
-#     con = sqlite3.connect('../data/database.db')
-#     cur = con.cursor()
-#     try:
-#         cur.execute('''DROP TABLE tle''')
-#     except:
-#         print("Table not available.")
-
-#     cur.execute('''CREATE TABLE tle (FOREIGN KEY (name_id) REFERENCES debris_name, s TEXT, t TEXT)''')
-#     con.commit()
-#     con.close()
+def clear_tables():
+    con = sqlite3.connect('../data/database.db')
+    cur = con.cursor()
+    try:
+        cur.execute('''DROP TABLE debris_name''')
+        cur.execute('''DROP TABLE debris''')
+        cur.execute('''DROP TABLE tle''')
+    except:
+        print("Table not available.")
+    con.close()

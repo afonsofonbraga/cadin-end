@@ -4,7 +4,7 @@ from sgp4.functions import jday
 from query import insert_debri
 from Debris import Debris
 
-def importData(time):
+def importDebris(time):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
@@ -17,11 +17,15 @@ def importData(time):
 
         debris_count = 0
         print("Imported", len(records), "tle objects from database.")
+    except:
+        print("Could not fetch data from tle database.")
+    try:
         for row in records:
-            # row[0] -> name
+            # row[0] -> name_ID
             # row[1] -> s
             # row[2] -> t
             satellite = Satrec.twoline2rv(row[1], row[2])
+
             year = int(time.split(',')[0])
             month = int(time.split(',')[1])
             day = int(time.split(',')[2])
@@ -36,5 +40,4 @@ def importData(time):
                 insert_debri(new_debri)
         print("From", len(records), "tle objects,", debris_count,"debris were added into the database.")
     except:
-        print("Could not fetch data from tle database.")
-importData()
+        print("Probelma nos dados")

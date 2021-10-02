@@ -1,8 +1,8 @@
 class Debris:
-    def __init__(self, name, s, t) -> None:
+    def __init__(self, name, pos, vel) -> None:
         self.name = name
-        self.s = s
-        self.t = t
-        
+        self.position = pos
+        self.velocity = vel
+
     def __repr__(self): 
-        return "Name:  % s \nLine1: % s \nLine2: % s \n" % (self.name, self.s, self.t)
+        return "Name:  % s \nPosition: % s \nVelocity: % s \n" % (self.name, self.position, self.velocity)

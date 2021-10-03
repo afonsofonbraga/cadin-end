@@ -64,4 +64,4 @@ def importDebris(time2):
     except:
         print("Probelma nos dados")
 
-importDebris('2021,10,02,21,37,23')
+importDebris('2021,10,03,17,37,23')

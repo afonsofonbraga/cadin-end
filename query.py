@@ -73,10 +73,10 @@ def insert_debri(debri):
 def insert_tle(tle):
     tle_id = 0
     try:
-        tle_id = get_debris_id(tle.name[0])
+        tle_id = get_debris_id(tle.name)
     except:
         create_tables()
-        tle_id = get_debris_id(tle.name[0])
+        tle_id = get_debris_id(tle.name)
     try:
         con = sqlite3.connect('database.db')
         cur = con.cursor()

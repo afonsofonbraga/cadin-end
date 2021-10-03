@@ -58,12 +58,13 @@ with requests.Session() as session:
 
 database = (resp.text.split("\r\n"))
 debrislist = []
-
+print("Data Fetched!")
 for data in range(0, np.size(database)-1, 3):
-    name = re.findall('0 (.+) DEB',database[data])
+    name = re.findall('0 (.+ DEB)',database[data])
     if size(name) == 1:
         s = database[data+1]
         t = database[data+2]
+        name = name[0] + ' ' + s.split()[1]
         new_tle = Tle(name, s, t)
         debrislist.append(new_tle)
         insert_tle(new_tle)

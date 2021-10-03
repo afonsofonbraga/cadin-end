@@ -5,7 +5,9 @@ def create_tables():
     con = sqlite3.connect('database.db')
     cur = con.cursor()
     cur.execute('''CREATE TABLE if not EXISTS debris_name (name_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)''')
+    con.commit()
     cur.execute('''CREATE TABLE if not EXISTS debris (debris_name_id INTEGER PRIMARY KEY, longitude REAL, latitude REAL, altitude REAL, vel1 REAL, vel2 REAL, vel3 REAL, FOREIGN KEY(debris_name_id) REFERENCES debris_name(name_id))''')
+    con.commit()
     cur.execute('''CREATE TABLE if not EXISTS tle (debris_name_id INTEGER PRIMARY KEY, s TEXT, t TEXT, FOREIGN KEY(debris_name_id) REFERENCES debris_name(name_id))''')
     con.commit()
     con.close()
@@ -58,7 +60,11 @@ def insert_debri(debri):
     try:
         con = sqlite3.connect('database.db')
         cur = con.cursor()
-        cur.execute('''INSERT OR REPLACE INTO debris (debris_name_id, longitude REAL, latitude REAL, altitude REAL, vel1, vel2, vel3) VALUES (?,?,?,?,?,?,?)''',(debris_id,debri.pos1,debri.pos2,debri.pos3,debri.vel1,debri.vel2,debri.vel3,))
+        cur.execute('''INSERT OR REPLACE INTO debris (debris_name_id,
+                longitude, latitude, altitude, vel1, vel2, vel3)
+                VALUES (?,?,?,?,?,?,?)''', (debris_id,
+                debri.longitude,debri.latitude,debri.altitude,
+                debri.vel1,debri.vel2,debri.vel3,))
         con.commit()
     except:
         print("ERROR INSERTING DEBRIS VALUE!!!!!!")

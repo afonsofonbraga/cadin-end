@@ -18,6 +18,7 @@ uriBase                = "https://www.space-track.org"
 requestLogin           = "/ajaxauth/login"
 requestCmdAction       = "/basicspacedata/query"
 requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/format/3le"
+#https://www.space-track.org/basicspacedata/query/class/tle_latest/DECAYED/null/OBJECT_TYPE/DEB~~/orderby/ORDINAL asc/emptyresult/show
 # https://www.space-track.org/basicspacedata/query/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/format/3le/emptyresult/show
 # ACTION REQUIRED FOR YOU:
 #=========================
@@ -34,7 +35,7 @@ requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/f
 print("Requesting data from space-track...")
 
 config = configparser.ConfigParser()
-config.read("../include/SLTrack.ini")
+config.read("SLTrack.ini")
 configUsr = config.get("configuration","username")
 configPwd = config.get("configuration","password")
 configOut = config.get("configuration","output")

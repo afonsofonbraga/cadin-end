@@ -24,6 +24,7 @@ def createJson():
     except:
         print("Could not fetch data from tle database.")
     try:
+        Dict = {}
         for row in records:
             name = get_debris_name(row[0])
             alt = row[1]
@@ -35,7 +36,8 @@ def createJson():
                 'latitude': lat,
                 'longitude': lon
             }
-        json2 = dumps(a)
+            Dict.append(a)
+        json2 = dumps(Dict)
         return json2
     except:
         print("error")

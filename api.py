@@ -15,7 +15,9 @@ class Coordinates(Resource):
     def get(self):
         data = createJson() # string json que o fonfon ta criando
 
-        return {'data': data }, 200
+        return {'data': data }, 200,\
+    { 'Access-Control-Allow-Origin': '*', \
+      'Access-Control-Allow-Methods' : 'PUT,GET' }
 
 api.add_resource(Coordinates, '/coordinates')
 

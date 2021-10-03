@@ -2,7 +2,7 @@ import sqlite3
 import numpy as np
 
 def create_tables():
-    con = sqlite3.connect('../data/database.db')
+    con = sqlite3.connect('database.db')
     cur = con.cursor()
     cur.execute('''CREATE TABLE if not EXISTS debris_name (name_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)''')
     cur.execute('''CREATE TABLE if not EXISTS debris (debris_name_id INTEGER PRIMARY KEY, longitude REAL, latitude REAL, altitude REAL, vel1 REAL, vel2 REAL, vel3 REAL, FOREIGN KEY(debris_name_id) REFERENCES debris_name(name_id))''')
@@ -11,7 +11,7 @@ def create_tables():
     con.close()
 
 def get_debris_id(debris_name):
-    con = sqlite3.connect('../data/database.db')
+    con = sqlite3.connect('database.db')
     cur = con.cursor()
     try:
         sqlite_select_query = """SELECT * FROM debris_name WHERE name=?"""
@@ -19,7 +19,7 @@ def get_debris_id(debris_name):
     except:
         con.close()
         create_tables()
-        con = sqlite3.connect('../data/database.db')
+        con = sqlite3.connect('database.db')
         cur = con.cursor()
         sqlite_select_query = """SELECT * FROM debris_name WHERE name=?"""
         cur.execute(sqlite_select_query,(debris_name,))
@@ -35,7 +35,7 @@ def get_debris_id(debris_name):
     return records[0][0]
 
 def get_debris_name(debris_id):
-    con = sqlite3.connect('../data/database.db')
+    con = sqlite3.connect('database.db')
     cur = con.cursor()
     try:
         sqlite_select_query = """SELECT * FROM debris_name WHERE name_id=?"""
@@ -56,7 +56,7 @@ def get_debris_name(debris_id):
 def insert_debri(debri):
     debris_id = debri.name
     try:
-        con = sqlite3.connect('../data/database.db')
+        con = sqlite3.connect('database.db')
         cur = con.cursor()
         cur.execute('''INSERT OR REPLACE INTO debris (debris_name_id, longitude REAL, latitude REAL, altitude REAL, vel1, vel2, vel3) VALUES (?,?,?,?,?,?,?)''',(debris_id,debri.pos1,debri.pos2,debri.pos3,debri.vel1,debri.vel2,debri.vel3,))
         con.commit()
@@ -72,7 +72,7 @@ def insert_tle(tle):
         create_tables()
         tle_id = get_debris_id(tle.name[0])
     try:
-        con = sqlite3.connect('../data/database.db')
+        con = sqlite3.connect('database.db')
         cur = con.cursor()
         cur.execute("""INSERT OR REPLACE INTO tle (debris_name_id,s,t) VALUES (?,?,?)""",(tle_id,tle.s,tle.t,))
         con.commit()
@@ -82,7 +82,7 @@ def insert_tle(tle):
 
 
 def clear_tables():
-    con = sqlite3.connect('../data/database.db')
+    con = sqlite3.connect('database.db')
     cur = con.cursor()
     try:
         cur.execute('''DROP TABLE debris_name''')

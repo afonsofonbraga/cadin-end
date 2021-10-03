@@ -11,7 +11,7 @@ import numpy as np
 
 def importDebris(time2):
     try:
-        con = sqlite3.connect('../data/database.db')
+        con = sqlite3.connect('database.db')
         cur = con.cursor()
 
         sqlite_select_query = """SELECT * FROM tle"""

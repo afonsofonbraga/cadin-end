@@ -34,3 +34,5 @@ The result will also be stored into the database.
 
 The api.py will act as a rest server providing a json file with the data prodidded by treatData.py.
 Cadin-app will make a request and display all the information in a GUI.
+
+Due to performance issues, the debris available to be displayed are 350. This value can be altered into get.py.

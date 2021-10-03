@@ -36,8 +36,8 @@ def createJson():
                 'latitude': lat,
                 'longitude': lon
             }
-            Dict.append(a)
-        json2 = dumps(Dict)
+            # Dict.append(a)
+        json2 = dumps(a)
         return json2
     except:
         print("error")

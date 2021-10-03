@@ -1,0 +1,11 @@
+matplotlib
+pandas
+configparser
+xlsxwriter
+requests
+sgp4
+flask
+pysqlite3
+astropy
+numpy
+gunicorn

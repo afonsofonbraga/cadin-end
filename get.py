@@ -20,9 +20,9 @@ def createJson():
         List = []
         for row in records:
             name = get_debris_name(row[0])
-            alt = row[1] * 1000
+            lon = row[1]
             lat = row[2]
-            lon = row[3]
+            alt = row[3] * 1000
             a= {
                 'debris_name': name,
                 'altitude': alt,

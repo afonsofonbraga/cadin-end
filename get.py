@@ -21,7 +21,7 @@ def createJson():
         i = 0
         for row in records:
             i +=1
-            if i > 500: break
+            if i > 350: break
             name = get_debris_name(row[0])
             lon = row[1]
             lat = row[2]

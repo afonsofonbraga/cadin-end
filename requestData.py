@@ -1,9 +1,6 @@
 from numpy.core.fromnumeric import size
 import requests
-import json
 import configparser
-import time
-from datetime import datetime
 import numpy as np
 from Tle import Tle
 from query import insert_tle
@@ -18,15 +15,13 @@ uriBase                = "https://www.space-track.org"
 requestLogin           = "/ajaxauth/login"
 requestCmdAction       = "/basicspacedata/query"
 requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/format/3le"
-#https://www.space-track.org/basicspacedata/query/class/tle_latest/DECAYED/null/OBJECT_TYPE/DEB~~/orderby/ORDINAL asc/emptyresult/show
-# https://www.space-track.org/basicspacedata/query/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/format/3le/emptyresult/show
+
 # ACTION REQUIRED FOR YOU:
 #=========================
 # Provide a config file in the same directory as this file, called SLTrack.ini, with this format (without the # signs)
 # [configuration]
 # username = XXX
 # password = YYY
-# output = ZZZ
 #
 # ... where XXX and YYY are your www.space-track.org credentials (https://www.space-track.org/auth/createAccount for free account)
 # ... and ZZZ is your Excel Output file - e.g. starlink-track.xlsx (note: make it an .xlsx file)
@@ -38,7 +33,6 @@ config = configparser.ConfigParser()
 config.read("SLTrack.ini")
 configUsr = config.get("configuration","username")
 configPwd = config.get("configuration","password")
-configOut = config.get("configuration","output")
 siteCred = {'identity': configUsr, 'password': configPwd}
 
 with requests.Session() as session:
@@ -52,8 +46,6 @@ with requests.Session() as session:
     if resp.status_code != 200:
         print(resp)
         raise MyError(resp, "GET fail on request for Starlink satellites")
-
-
     session.close()
 
 database = (resp.text.split("\r\n"))

@@ -5,7 +5,7 @@ xlsxwriter
 requests
 sgp4
 flask
-sqlite3
+pysqlite3
 astropy
 numpy
 gunicorn

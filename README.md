@@ -1,6 +1,12 @@
 # cadin-end
 ## Back-end developed for NASA International Space Apps Challenge 2021
 
+### Usefull Links
+
+    Cadin Website: http://cadinasa.co
+    Cadin-App: https://github.com/pedrohsreis/cadin-app
+    Cadin-end: https://github.com/afonsofonbraga/cadin-end
+
 ### requestData.py
 
     This code will request all debris data that currently orbits the earth. (Data providded by space-track)

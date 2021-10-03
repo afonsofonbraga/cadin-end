@@ -37,5 +37,4 @@ def createJson():
         return json2
     except:
         print("error")
-teste = createJson()
-print(teste)
+createJson()

@@ -10,7 +10,7 @@ api = Api(app)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@cross_origin()
+# @cross_origin()
 class Coordinates(Resource):
     def get(self):
         data = createJson() # string json que o fonfon ta criando

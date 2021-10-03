@@ -30,7 +30,7 @@ def createJson():
                 'longitude': lon
             }
             List.append(a)
-        json2 = dumps(List, indent=4)
+        json2 = dumps(List)
         return json2
     except:
         print("error")

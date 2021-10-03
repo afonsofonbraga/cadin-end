@@ -35,9 +35,7 @@ def importDebris(time2):
         jd, fr = jday(year, month, day, hour, minute, second)
 
         time3 = astropy.time.Time(jd + fr, format = 'jd')
-        i = 0
         for row in records:
-            i +=1
             # row[0] -> name_ID
             # row[1] -> s
             # row[2] -> t
@@ -54,7 +52,6 @@ def importDebris(time2):
                 teme = TEME(r.with_differentials(v), obstime=time3)
                 itrs = teme.transform_to(ITRS(obstime=time3))
                 location = itrs.earth_location
-                # print(i)
 
                 longitude = int(str(location.geodetic.lon).split('d')[0])
                 latitude = int(str(location.geodetic.lat).split('d')[0])

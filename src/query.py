@@ -59,7 +59,6 @@ def insert_debri(debri):
     try:
         con = sqlite3.connect('../data/database.db')
         cur = con.cursor()
-        print(debris_id)
         cur.execute('''INSERT OR REPLACE INTO debris (debris_name_id, pos1, pos2, pos3, vel1, vel2, vel3) VALUES (?,?,?,?,?,?,?)''',(debris_id,debri.pos1,debri.pos2,debri.pos3,debri.vel1,debri.vel2,debri.vel3,))
         con.commit()
     except:

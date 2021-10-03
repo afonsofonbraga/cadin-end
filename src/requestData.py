@@ -17,8 +17,8 @@ class MyError(Exception):
 uriBase                = "https://www.space-track.org"
 requestLogin           = "/ajaxauth/login"
 requestCmdAction       = "/basicspacedata/query"
-requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-1/orderby/COMMENT asc/format/3le"
-
+requestDebris   = "/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/format/3le"
+# https://www.space-track.org/basicspacedata/query/class/tle/OBJECT_TYPE/DEB~~/EPOCH/>now-7/orderby/EPOCH asc/format/3le/emptyresult/show
 # ACTION REQUIRED FOR YOU:
 #=========================
 # Provide a config file in the same directory as this file, called SLTrack.ini, with this format (without the # signs)

@@ -1,13 +1,6 @@
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
-from sqlalchemy import create_engine
 from json import dumps
 import sqlite3
 from query import get_debris_name
-
-db_connect = create_engine('sqlite:///../data/database.db')
-app = Flask(__name__)
-api = Api(app)
 
 def createJson():
     try:
